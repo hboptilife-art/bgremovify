@@ -1,0 +1,2 @@
+CREATE POLICY "no_user_updates" ON public.kaspi_orders FOR UPDATE TO authenticated USING (false) WITH CHECK (false);
+CREATE POLICY "no_user_deletes" ON public.kaspi_orders FOR DELETE TO authenticated USING (false);

@@ -1,0 +1,1 @@
+UPDATE public.gallery_categories SET unsplash_query = 'concrete backdrop studio minimal' WHERE label = 'Soft Concrete Studio';

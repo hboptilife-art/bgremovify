@@ -1,0 +1,4 @@
+INSERT INTO public.gallery_items (category_id, source, image_url, thumb_url, position) VALUES
+('dubai-garden', 'manual', '/__l5e/assets-v1/7f763b3d-6d4b-4091-b060-2759f584b521/miracle-1.jpg', '/__l5e/assets-v1/7f763b3d-6d4b-4091-b060-2759f584b521/miracle-1.jpg', 1),
+('dubai-garden', 'manual', '/__l5e/assets-v1/bfe5ef5d-2d33-49ce-9e88-84a012b15d7f/miracle-2.jpg', '/__l5e/assets-v1/bfe5ef5d-2d33-49ce-9e88-84a012b15d7f/miracle-2.jpg', 2),
+('dubai-garden', 'manual', '/__l5e/assets-v1/06cdb7b2-68e7-4df2-9cb0-ea19b192b801/miracle-3.jpg', '/__l5e/assets-v1/06cdb7b2-68e7-4df2-9cb0-ea19b192b801/miracle-3.jpg', 3);
