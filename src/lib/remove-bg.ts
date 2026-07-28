@@ -127,17 +127,40 @@ async function removeBackgroundWithWorker(imageDataUrl: string, onProgress?: Pro
   });
 }
 
-export async function removeBackground(
+eexport async function removeBackground(
   imageDataUrl: string,
-  onProgress?: ProgressCallback,
+  onProgress?: ProgressCallback
 ): Promise<Blob> {
-  // Keep the heavy model load/inference off React's main thread. The worker can
-  // still use WebGPU when available, but a GPU/wasm stall can no longer freeze
-  // the UI into the silent "Waiting" state.
-  if (supportsWorkerRemoval()) {
-    return await removeBackgroundWithWorker(imageDataUrl, onProgress);
-  }
+  // Arayüzdeki ilerleme çubuğu / aşamaları bozulmasın diye tetikliyoruz
+  onProgress?.("prepare");
 
-  const { removeBackgroundInline } = await import("./remove-bg.inline");
-  return await removeBackgroundInline(imageDataUrl, onProgress);
-}
+  try {
+      const response = await fetch("/.netlify/functions/remove-bg", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ image: imageDataUrl }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || "Sunucu tabanlı arka plan silme başarısız oldu.");
+      }
+
+      onProgress?.("remove");
+      const data = await response.json();
+
+      const imageUrl = data.output;
+      if (!imageUrl) {
+        throw new Error("Sunucudan geçerli bir görsel sonucu alınamadı.");
+      }
+
+      const imageResponse = await fetch(imageUrl);
+      const blob = await imageResponse.blob();
+      
+      return blob;
+    } catch (error: any) {
+      console.error("Background removal error:", error);
+      throw error;
+    }
