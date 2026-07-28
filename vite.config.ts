@@ -16,7 +16,7 @@ export default defineConfig({
     },
   },
   nitro: {
-    externals: {
+    rollupConfig: {
       external: [
         'sharp',
         'onnxruntime-node',
