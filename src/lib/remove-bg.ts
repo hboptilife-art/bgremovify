@@ -163,4 +163,4 @@ export async function removeBackground(
     } catch (error: any) {
       console.error("Background removal error:", error);
       throw error;
-    }
+    }}
