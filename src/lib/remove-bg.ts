@@ -127,7 +127,7 @@ async function removeBackgroundWithWorker(imageDataUrl: string, onProgress?: Pro
   });
 }
 
-eexport async function removeBackground(
+export async function removeBackground(
   imageDataUrl: string,
   onProgress?: ProgressCallback
 ): Promise<Blob> {
