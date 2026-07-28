@@ -15,4 +15,15 @@ export default defineConfig({
       ],
     },
   },
+  nitro: {
+    externals: {
+      external: [
+        'sharp',
+        'onnxruntime-node',
+        'onnxruntime-common',
+        '@img/sharp-linux-x64',
+        '@img/sharp-libvips-linux-x64',
+      ],
+    },
+  },
 });
