@@ -1,18 +1,13 @@
 export async function handler(event, context) {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: JSON.stringify({ error: "Method Not Allowed" }) };
-  }
-
   try {
-    const { image } = JSON.parse(event.body);
-
-    if (!image) {
-      return { statusCode: 400, body: JSON.stringify({ error: "Image data is required" }) };
-    }
-
     const apiToken = process.env.REPLICATE_API_TOKEN;
-    if (!apiToken) {
-      return { statusCode: 500, body: JSON.stringify({ error: "REPLICATE_API_TOKEN is not configured in Netlify" }) };
+    
+    let image;
+    try {
+      const body = JSON.parse(event.body || "{}");
+      image = body.image;
+    } catch (e) {
+      image = null;
     }
 
     const response = await fetch("https://api.replicate.com/v1/predictions", {
@@ -23,7 +18,7 @@ export async function handler(event, context) {
         "Prefer": "wait"
       },
       body: JSON.stringify({
-        version: "fb8af171cfa1616ddcf1242c0f3f9f461ada5b3672d911ef5b6538d65f847ac1",
+        version: "a029dff38972b5fda4ec5d75d7d1cd25aeff621d2cf4946a41055d7db66b80bc",
         input: { image: image }
       })
     });
